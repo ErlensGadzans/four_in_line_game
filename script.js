@@ -28,8 +28,27 @@ for (let r = 0; r < 10; r++) {
           data[r] = {}; //iestatam, ka objekts ir tukss
         }
         data[r][c] = symbol;
+
+        if (checkWinner(r, c, symbol)) {
+          document.querySelector(".message").textContent = "We have a winner!";
+        }
+
         move_count++;
       }
     };
   }
+}
+
+function checkWinner(r, c, symbol) {
+  let counter = 0;
+  for (let i = 0; i <= 2; i++) {
+    //validation skaita no sunas pa kreisi rinda
+    if (data[r][--c] === symbol) {
+      counter++;
+    }
+  }
+  if (counter == 3) {
+    return true;
+  }
+  return false;
 }
