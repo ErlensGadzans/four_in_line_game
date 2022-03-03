@@ -18,10 +18,11 @@ for (let r = 0; r < 10; r++) {
         r == 9 ||
         (data.hasOwnProperty(r + 1) && data[r + 1].hasOwnProperty(c))
       ) {
-        let symbol = "x";
-        if (move_count % 2 === 1) {
-          symbol = "o";
-        }
+        let symbol = move_count % 2 === 1 ? "o" : "x";
+        // let symbol = "x";
+        // if (move_count % 2 === 1) {
+        //   symbol = "o";
+        // }
         this.textContent = symbol;
         //parbaude vai vertiba ir jau iestatita
         if (!data.hasOwnProperty(r)) {
@@ -41,13 +42,26 @@ for (let r = 0; r < 10; r++) {
 
 function checkWinner(r, c, symbol) {
   let counter = 0;
+  let column = c;
+
   for (let i = 0; i <= 2; i++) {
     //validation skaita no sunas pa kreisi rinda
-    if (data[r][--c] === symbol) {
+    if (data[r][--column] === symbol) {
       counter++;
+    } else {
+      break;
     }
   }
-  if (counter == 3) {
+  column = c;
+  for (let i = 0; i <= 2; i++) {
+    if (data[r][++column] === symbol) {
+      counter++;
+    } else {
+      break;
+    }
+  }
+
+  if (counter >= 3) {
     return true;
   }
   return false;
