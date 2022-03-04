@@ -42,40 +42,38 @@ for (let r = 0; r < 10; r++) {
 
 function checkWinner(r, c, symbol) {
   let counter;
+  const left = -1,
+    right = 1,
+    up = -1,
+    down = 1;
 
-  horizontal: {
+  const lines = [
+    //horizontal
+    [
+      [0, left],
+      [0, right],
+    ],
+    [
+      //vertical
+      [down, 0],
+    ],
+    //diognal1
+    [
+      [right, up],
+      [left, down],
+    ],
+    //diognal2
+    [
+      [right, down],
+      [left, up],
+    ],
+  ];
+
+  for (let line of lines) {
     counter = 0;
-    counter += countInDirection(r, c, symbol, 0, -1);
-    counter += countInDirection(r, c, symbol, 0, 1);
-
-    if (counter >= 3) {
-      return true;
+    for (let direction of line) {
+      counter += countInDirection(r, c, symbol, direction[0], direction[1]);
     }
-  }
-
-  vertical: {
-    counter = 0;
-    counter += countInDirection(r, c, symbol, 1, 0);
-
-    if (counter >= 3) {
-      return true;
-    }
-  }
-
-  diognal1: {
-    counter = 0;
-    counter += countInDirection(r, c, symbol, 1, -1);
-    counter += countInDirection(r, c, symbol, -1, 1);
-
-    if (counter >= 3) {
-      return true;
-    }
-  }
-  diognal2: {
-    counter = 0;
-    counter += countInDirection(r, c, symbol, 1, 1);
-    counter += countInDirection(r, c, symbol, -1, -1);
-
     if (counter >= 3) {
       return true;
     }
