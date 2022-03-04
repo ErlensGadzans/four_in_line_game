@@ -41,28 +41,60 @@ for (let r = 0; r < 10; r++) {
 }
 
 function checkWinner(r, c, symbol) {
-  let counter = 0;
-  let column = c;
+  let counter;
 
-  for (let i = 0; i <= 2; i++) {
-    //validation skaita no sunas pa kreisi rinda
-    if (data[r][--column] === symbol) {
-      counter++;
-    } else {
-      break;
-    }
-  }
-  column = c;
-  for (let i = 0; i <= 2; i++) {
-    if (data[r][++column] === symbol) {
-      counter++;
-    } else {
-      break;
+  horizontal: {
+    counter = 0;
+    counter += countInDirection(r, c, symbol, 0, -1);
+    counter += countInDirection(r, c, symbol, 0, 1);
+
+    if (counter >= 3) {
+      return true;
     }
   }
 
-  if (counter >= 3) {
-    return true;
+  vertical: {
+    counter = 0;
+    counter += countInDirection(r, c, symbol, 1, 0);
+
+    if (counter >= 3) {
+      return true;
+    }
   }
+
+  diognal1: {
+    counter = 0;
+    counter += countInDirection(r, c, symbol, 1, -1);
+    counter += countInDirection(r, c, symbol, -1, 1);
+
+    if (counter >= 3) {
+      return true;
+    }
+  }
+  diognal2: {
+    counter = 0;
+    counter += countInDirection(r, c, symbol, 1, 1);
+    counter += countInDirection(r, c, symbol, -1, -1);
+
+    if (counter >= 3) {
+      return true;
+    }
+  }
+
   return false;
+}
+
+function countInDirection(r, c, symbol, diff_r = 0, diff_c = 0) {
+  let counter = 0;
+  for (let i = 0; i <= 2; i++) {
+    r = r + diff_r;
+    c = c + diff_c;
+
+    if (data.hasOwnProperty(r) && data[r][c] === symbol) {
+      counter++;
+    } else {
+      break;
+    }
+  }
+  return counter;
 }
