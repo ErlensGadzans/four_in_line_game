@@ -96,3 +96,16 @@ function countInDirection(r, c, symbol, diff_r = 0, diff_c = 0) {
   }
   return counter;
 }
+
+document.querySelector(".reset").onclick = function (event) {
+  const cells = four_in_line.children;
+  for (let r in data) {
+    let row = data[r];
+    for (let c in row) {
+      cells[10 * r + Number(c)].textContent = "";
+    }
+  }
+  move_count = 0;
+  document.querySelector(".message").textContent = "";
+  data = {};
+};
